@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
         return email
 
     def clean_username(self):
-        username = self.cleaned_data['username']
+        username = self.cleaned_data['username'].lower()
         if len(username) < 3:
             raise forms.ValidationError(
                     "Username must be at least 3 characters long.")
@@ -48,7 +48,7 @@ class UsersAuthenticationForm(forms.ModelForm):
 
     def clean(self):
         if self.is_valid():
-            username = self.cleaned_data['username']
+            username = self.cleaned_data['username'].lower()
             password = self.cleaned_data['password']
             if not authenticate(username=username, password=password):
                 raise forms.ValidationError("Invalid email or password")
