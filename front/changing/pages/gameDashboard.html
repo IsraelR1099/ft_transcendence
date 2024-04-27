@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Game Dashboard</title>
+		<link rel="stylesheet" href="../css/game.css">
+	</head>
+	<body>
+		<div class="container">
+			<h1>Tic Tac Toe</h1>
+			<div id="chooseOption">
+				<h2>Choose an option</h2>
+				<div id="createRoom">
+					<label for="roomName">Enter room name:</label>
+					<input type="text" id="roomName" placeholder="Enter room name">
+					<button onclick="createRoom()">Create Room</button>
+				</div>
+				<div id="joinRoom">
+					<label for="roomCode">Enter room code:</label>
+					<input type="text" id="roomCode" placeholder="Enter room code">
+					<button onclick="joinRoom()">Join Room</button>
+				</div>
+			</div>
+			<button id="startGame" onclick="startGame()" style="display: none;" disabled>Start Game</button>
+		</div>
+		<script src="../js/gameDashboard.js"></script>
+	</body>
+</html>

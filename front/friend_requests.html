@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Friend Requests</title>
+	</head>
+	<body>
+		<h1>Friend Requests</h1>
+		<div id="friendRequestsContainer"></div>
+
+		<script>
+
+			const urlParams = new URLSearchParams(window.location.search);
+			const friendRequestsJson = urlParams.get('requests');
+			const friendRequests = JSON.parse(decodeURIComponent(friendRequestsJson));
+
+			const friendRequestsContainer = document.getElementById('friendRequestsContainer');
+			if (friendRequests && friendRequests.length > 0)
+			{
+				friendRequests.forEach(request => {
+					const requestElement = document.createElement('div');
+					requestElement.textContent = `Sender: ${request.sender}`;
+
+                    const acceptButton = document.createElement('button');
+                    acceptButton.textContent = 'Accept';
+                    acceptButton.addEventListener('click', function() {
+                        handleAcceptRequest(request.sender, request.pk);
+                    });
+
+                    const declineButton = document.createElement('button');
+                    declineButton.textContent = 'Decline';
+                    declineButton.addEventListener('click', function() {
+                        handleDeclineRequest(request.sender, request.pk);
+                    });
+
+                    requestElement.appendChild(acceptButton);
+                    requestElement.appendChild(declineButton);
+
+					friendRequestsContainer.appendChild(requestElement);
+				});
+			}
+			else
+			{
+				const noRequestsMessage = document.createElement('p');
+				noRequestsMessage.textContent = 'No friend requests';
+				friendRequestsContainer.appendChild(noRequestsMessage);
+			}
+
+            async function handleAcceptRequest(sender, pk)
+            {
+                try
+                {
+                    const userData = JSON.parse(localStorage.getItem('userData'));
+                    const response = await fetch(`/api/user/accept_friend_request/${pk}/`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${userData.token_access}`
+                            },
+                        });
+
+                    if (response.ok)
+                    {
+                        alert(`Accepted friend request from ${sender}`);
+                    }
+                    else
+                    {
+                        alert('Failed to accept friend request');
+                    }
+                }
+                catch (error)
+                {
+                    console.error('Error accepting friend request:', error);
+                }
+            }
+
+            async function handleDeclineRequest(sender, pk)
+            {
+                console.log('Declining request from ' + sender + ' with pk ' + pk);
+                try
+                {
+                    const userData = JSON.parse(localStorage.getItem('userData'));
+                    const response = await fetch(`/api/user/decline_friend_request/${pk}/`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${userData.token_access}`
+                            },
+                        });
+
+                    if (response.ok)
+                    {
+                        alert(`Declined friend request from ${sender}`);
+                    }
+                    else
+                    {
+                        alert('Failed to decline friend request');
+                    }
+                }
+                catch (error)
+                {
+                    console.error('Error declining friend request:', error);
+                }
+            }
+		</script>
+	</body>
+</html>

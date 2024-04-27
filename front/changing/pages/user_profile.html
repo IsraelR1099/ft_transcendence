@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Super pong</title>
+	    <link rel="stylesheet" href="../css/styles.css">
+	     <style>
+        /* Add your custom CSS styles here */
+        #userProfile {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+	    position: relative;
+        }
+
+        #userProfile h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #userProfile img {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        #userProfile ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #userProfile li {
+            margin-bottom: 10px;
+        }
+
+	#userProfileButtons {
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 20px;
+		border: 2px solid #ccc;
+		border-radius: 10px;
+		position: relative;
+	}
+
+	.form-container {
+		max-width: 400px;
+		margin: 0 auto;
+	}
+    </style>
+	</head>
+	<body>
+		<form id="searchForm">
+			<input type="text" id="searchInput" placeholder="Search for users">
+			<button type="submit">Search</button>
+		</form>
+		<div id="userProfile"></div>
+		<div id="userProfileButtons">
+			<button id="logoutButton">Logout</button>
+			<button id="editProfileButton">Edit Profile</button>
+			<button id="friendsButton">Friends</button>
+			<button id="friendRequestsButton">Friend Requests</button>
+			<button id="websocketButton">Websocket</button>
+			<button id="gameDashboardButton">Game</button>
+			<button id="GameHistoryButton">Game History</button>
+		</div>
+		<script src="../js/displayUserProfile.js"></script>
+		<script src="../js/logout.js"></script>
+		<script src="../js/searchQuery.js"></script>
+		<script>
+			document.getElementById('GameHistoryButton').addEventListener('click', function() {
+				window.location.href = "gameHistory.html";
+			});
+		</script>
+		<script>
+			document.getElementById('editProfileButton').addEventListener('click', function() {
+				window.location.href = "editProfile.html";
+			});
+		</script>
+		<script>
+			document.getElementById('websocketButton').addEventListener('click', function() {
+				window.location.href = "websocket.html";
+			});
+		</script>
+		<script>
+			document.getElementById('gameDashboardButton').addEventListener('click', function() {
+				window.location.href = "gameDashboard.html";
+			});
+		</script>
+		<script>
+			document.getElementById('friendRequestsButton').addEventListener('click', function() {
+				window.location.href = "friendRequests.html";
+			});
+		</script>
+		<script>
+			document.getElementById('friendsButton').addEventListener('click', function() {
+				window.location.href = "friends.html";
+			});
+		</script>
+	</body>
+</html>

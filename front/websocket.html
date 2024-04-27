@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
+</head>
+<body>
+
+<h1>WebSocket Example</h1>
+
+<script>
+    const socket = new WebSocket('wss://pong.xyz/api/ws/chat/');
+
+    socket.addEventListener('open', function (event) {
+        console.log('WebSocket connection established');
+    });
+
+    socket.addEventListener('message', function (event) {
+        console.log('Message from server:', event.data);
+    });
+
+    socket.addEventListener('error', function (event) {
+        console.error('WebSocket error:', event);
+    });
+
+    socket.addEventListener('close', function (event) {
+        console.log('WebSocket connection closed');
+    });
+</script>
+
+</body>
+</html>

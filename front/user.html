@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+</head>
+<body>
+
+<div class="main">
+    <div id="userPage">
+        <h1>Welcome to the User Page!</h1>
+	<form id="searchForm">
+		<input type="text" id="searchInput" placeholder="Search user">
+		<button type="submit">Search</button>
+	</form>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Id</th>
+				<th>Email</th>
+				<th>Username</th>
+				<th>password</th>
+				<th>Status</th>
+				<th>token access</th>
+				<th>token refresh</th>
+			</tr>
+		</thead>
+		<tbody id="userTable">
+		</tbody>
+	</table>
+
+        <button id="logoutButton">Logout</button>
+	<button id="editButton">Edit profile</button>
+    	<button id="friendRequestButton">Friend Requests</button>
+	<button id="friendListButton">Friend List</button>
+	<button id="websocketButton">Websocket</button>
+    </div>
+</div>
+
+<script src="user.js"></script>
+<script src="search.js"></script>
+<script src="friend_requests.js"></script>
+<script src="friend_list.js"></script>
+<script src="websocket.js"></script>
+</body>
+</html>

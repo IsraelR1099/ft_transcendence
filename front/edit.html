@@ -1,0 +1,26 @@
+<!-- edit.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h1>Edit Profile</h1>
+    <form id="editForm" enctype="multipart/form-data">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+
+        <label for="profileImage">Profile Image:</label>
+        <input type="file" id="profileImage" name="profileImage"><br><br>
+
+        <button type="submit" id="saveButton">Save Changes</button>
+    </form>
+
+    <script src="edit.js"></script>
+</body>
+</html>

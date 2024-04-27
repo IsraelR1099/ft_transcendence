@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+<div id="searchResults"></div>
+<script>
+	const urlParams = new URLSearchParams(window.location.search);
+	const searchResultsJson = urlParams.get('results');
+	const searchResults = JSON.parse(searchResultsJson);
+	const searchResultsContainer = document.getElementById('searchResults');
+	if (searchResults)
+	{
+		searchResults.forEach(account => {
+			const accountElement = document.createElement('div');
+			accountElement.classList.add('account');
+
+            const usernameLink = document.createElement('a');
+            usernameLink.textContent = account.username;
+            usernameLink.href = "#";
+            usernameLink.addEventListener('click', function() {
+                fetchUserInformation(account.id, account.username);
+            });
+
+            accountElement.appendChild(usernameLink);
+
+            const userIdParagraph = document.createElement('p');
+            userIdParagraph.textContent = account.id;
+            accountElement.appendChild(userIdParagraph);
+
+            const friendStatusParagraph = document.createElement('p');
+            friendStatusParagraph.textContent = account.isFriend ? 'Friend' : 'Not friend';
+            accountElement.appendChild(friendStatusParagraph);
+
+            searchResultsContainer.appendChild(accountElement);
+        });
+	}
+	else
+	{
+		const errorMessageElement = document.createElement('p');
+		errorMessageElement.textContent = 'No results found';
+		searchResultsContainer.appendChild(errorMessageElement);
+	}
+
+    async function fetchUserInformation(userId, username)
+    {
+        try
+        {
+            console.log('token', localStorage.getItem('token_access1'));
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const response = await fetch(`/api/user/account/${userId}/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${userData.token_access}`,
+                    },
+                });
+
+            if (!response.ok)
+            {
+                throw new Error(`Failed to fetch user information:
+                    ${response.statusText} (${response.status})`);
+            }
+
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json'))
+            {
+                const userData = await response.json();
+				window.location.href =
+					`user_profile.html?user_id=${userId}&username=${username}`;
+            }
+            else
+            {
+                const responseBody = await response.text();
+                console.log('Non-JSON response:', responseBody);
+                throw new Error('Failed to fetch user information: response is not JSON');
+            }
+        }
+        catch (error)
+        {
+            console.error('Error:', error);
+        }
+    }
+
+</script>
+
+</body>
+</html>

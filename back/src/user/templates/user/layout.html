@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <meta name"viewport" content="width=device-width, initial-scale=1.0">
+		<title>Users</title>
+	</head>
+	<body>
+        <div class="main">
+			<form class="search-bar justify-content-start" onsubmit="return executeQuery();">
+			<input type="text" class="form-control" name="q" id="id_q_small" placeholder="Search...">
+		</form>
+    		{% block body %}
+    		{% endblock %}
+        </div>
+    {% include 'snippets/footer.html' %'}
+	</body>
+	<script type="text/javascript">
+		function executeQuery()
+		{
+			var query = document.getElementById("id_q_small").value;
+			if (query == "")
+			{
+				query = document.getElementById('id_q_large').value;
+			}
+			window.location.replace("{% url 'search' %}?q=" + query)
+			return false
+		}
+
+	</script>
+</html>

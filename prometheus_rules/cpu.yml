@@ -1,0 +1,11 @@
+groups:
+  - name: CPU
+    rules:
+      - alert: HostHighCpuLoad
+        expr: 'sum by (instance) (avg by (mode, instance) (rate(node_cpu_seconds_total{mode!="idle"}[2m]))) > 0.8 * on(instance) group_left(nodename) node_uname_info{nodename=~".+"}'
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Host high CPU load (instance {{ $labels.instance }})"
+          description: "CPU load is > 80% for 5 minutes on instance {{ $labels.instance }}"

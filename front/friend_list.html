@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend List</title>
+</head>
+<body>
+    <h1>Friend List</h1>
+    <div id="friendListContainer"></div>
+
+    <script>
+        // Retrieve the friends list from the query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const friendsJson = urlParams.get('friends');
+        const friends = JSON.parse(decodeURIComponent(friendsJson));
+
+        // Display the list of friends
+        const friendListContainer = document.getElementById('friendListContainer');
+        if (friends && friends.length > 0) {
+            friends.forEach(friend => {
+                const friendElement = document.createElement('div');
+                friendElement.textContent = `Friend: ${friend.friend}`;
+                friendListContainer.appendChild(friendElement);
+            });
+        } else {
+            const noFriendsMessage = document.createElement('p');
+            noFriendsMessage.textContent = 'No friends found.';
+            friendListContainer.appendChild(noFriendsMessage);
+        }
+    </script>
+</body>
+</html>

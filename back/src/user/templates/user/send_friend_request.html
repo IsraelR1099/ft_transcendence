@@ -1,0 +1,13 @@
+{% extends "user/layout.html" %}
+
+{% block body %}
+    <ul class="all_users">
+        {% for user in users %}
+            {% if not user.is_superuser %}
+                {% if user not in request.user.friends.all and user != request.user %}
+                <h1>{{ user  }} <a href="/send_friend_request/{{ user.id }}">Send Friend Request</a></h1>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

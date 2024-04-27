@@ -1,0 +1,19 @@
+groups:
+  - name: memory
+    rules:
+      - alert: HostMemoryIsUnderUtilized
+        expr: (100 - (avg_over_time(node_memory_MemAvailable_bytes[30m]) / node_memory_MemTotal_bytes * 100) < 20) * on(instance) group_left(nodename) node_uname_info{nodename=~".+"}
+        for: 1w
+        labels:
+          severity: info
+        annotations:
+          summary: "Host memory is under utilized (instance {{ $labels.instance }})"
+          description: "Node memory is < 20% for 1 week. Consider reducing memory space.\n VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: HostOutOfMemory
+        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 5) * on(instance) group_left(nodename) node_uname_info{nodename=~".+"}
+        for: 0m
+        labels:
+          severity: page
+        annotations:
+          summary: "Host out of memory (instance {{ $labels.instance }})"
+          description: "Node memory is filling up (< 5% left)\n VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

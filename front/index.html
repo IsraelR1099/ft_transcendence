@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register Test</title>
+</head>
+<body>
+
+  <h2>Login form</h2>
+  <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br>
+      <button type="submit">Login</button>
+  </form>
+
+  <h2>Register form</h2>
+  <form id="registerForm">
+      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <br>
+      <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
+      <br>
+      <input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
+      <br>
+      <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm Password" required>
+        <button type="submit">Register</button>
+  </form>
+
+  <button id="oauthButton">42 auth</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
