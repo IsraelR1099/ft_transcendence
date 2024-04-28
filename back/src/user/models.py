@@ -57,8 +57,8 @@ class Users(AbstractBaseUser):
     is_active           = models.BooleanField(default=True)
     profile_image = models.FileField(max_length=500, upload_to=get_profile_image_filepath, null=True, blank=True, default=get_default_profile_image)
     friends             = models.ManyToManyField("Users", blank=True)
-    hide_email          = models.BooleanField(default=True)
     match_history       = models.ManyToManyField("MatchHistory", blank=True)
+    is_online           = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
@@ -73,6 +73,14 @@ class Users(AbstractBaseUser):
     # image and sets it as profile_image name
     def get_profile_image_filename(self):
         return (str(self.profile_image)[str(self.profile_image).index(f'profile_images/{self.pk}/'):])
+
+    def set_online(self):
+        self.is_online = True
+        self.save()
+
+    def set_offline(self):
+        self.is_online = False
+        self.save()
 
 
 class FriendList(models.Model):

@@ -79,6 +79,7 @@ def login_view(request, *args, **kwargs: HttpRequest) -> JsonResponse:
                 user = authenticate(username=username, password=password)
                 if user:
                     login(request, user)
+                    user.set_online()
                     context = generate_response("200", user=user)
                     return (JsonResponse(context, encoder=DjangoJSONEncoder))
                 else:
@@ -106,6 +107,7 @@ def logout_view(request: HttpRequest) -> JsonResponse:
         user_email = user.email
         if "42barcelona" in user_email:
             logout(request)
+            user.set_offline()
             user.delete()
             context = {
                     "message": "User deleted.",
@@ -115,6 +117,7 @@ def logout_view(request: HttpRequest) -> JsonResponse:
                 context, encoder=DjangoJSONEncoder, status=200))
         else:
             logout(request)
+            user.set_offline()
             context = {
                     "message": "Logout successful.",
                     "status": "success",
@@ -150,6 +153,7 @@ def register_user(request, *args, **kwargs: HttpRequest) -> JsonResponse:
                 account = authenticate(
                         username=username, password=raw_password)
                 login(request, account)
+                account.set_online()
                 context = generate_response("201", user=account)
                 logging.debug("context on succes %s", context)
                 return (JsonResponse(
@@ -278,7 +282,8 @@ def account_view(request, *args, **kwargs):
         context['is_self'] = is_self
         context['is_friend'] = is_friend
         context['friend_requests'] = friend_requests_dict
-    # logging.debug("context in account view is %s", context)
+        context['online'] = account.is_online
+    logging.debug("context in account view is %s", context)
     return (JsonResponse(context, encoder=DjangoJSONEncoder, status=200))
 
 
@@ -608,6 +613,7 @@ def friend_list_view(request, *args, **kwargs):
                 friends.append(({'friend_id': friend.id,
                                  'friend': friend.username,
                                  'profile_image': image_base64,
+                                 'is_online': friend.is_online,
                                  'is_friend':
                                  auth_user_friend_list.is_mutual_friend(friend)}))
             context['friends'] = friends

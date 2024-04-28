@@ -188,6 +188,7 @@ def register_42_user(request, user_info):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            user.set_online()
             login(request, user)
             return user
         else:
