@@ -5,8 +5,8 @@ WORKDIR /srv
 COPY requirements.txt .
 
 RUN apk update && \
-    apk add --no-cache vim \
-	gcc \
+    apk add --no-cache gcc \
+	libffi-dev \
 	python3-dev \
 	musl-dev \
 	libpq \
@@ -18,8 +18,7 @@ RUN apk update && \
 COPY src /srv
 COPY ./tools/wait-for-it.sh /usr/local/bin/wait-for-it.sh
 COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY ./tools/reset_migrations.sh /usr/local/bin/reset_migrations.sh
 
-RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/wait-for-it.sh /usr/local/bin/reset_migrations.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/wait-for-it.sh
 
 ENTRYPOINT ["/bin/sh", "/usr/local/bin/entrypoint.sh"]
